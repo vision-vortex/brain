@@ -74,10 +74,10 @@ queueList = {
 logging = logging.getLogger()
 
 Dashboard = True
-Camera = False
+Camera = True # changed by Vale
 Semaphores = False
 TrafficCommunication = False
-SerialHandler = False
+SerialHandler = True # changed by Vale
 
 # ------ New component flags starts here ------#
  
