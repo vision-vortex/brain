@@ -45,7 +45,7 @@ export class KlSwitchComponent {
   
   public isMobile: boolean = false;
 
-  public enableButon : Boolean = true;
+  public enableButon : Boolean = false;
   private enableButtonSubscription: Subscription | undefined;
 
   constructor(private webSocketService: WebSocketService,
