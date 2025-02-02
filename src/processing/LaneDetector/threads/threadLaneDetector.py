@@ -2,6 +2,7 @@ from src.templates.threadwithstop import ThreadWithStop
 from src.utils.messages.allMessages import DrivingMode, Control
 from src.utils.messages.messageHandlerSubscriber import messageHandlerSubscriber
 from src.utils.messages.messageHandlerSender import messageHandlerSender
+import time
 class threadLaneDetector(ThreadWithStop):
     """This thread handles LaneDetector.
     Args:
@@ -23,24 +24,24 @@ class threadLaneDetector(ThreadWithStop):
         self.i = 0
         self.instructions = [
             {
-                "Time": 5,
-                "Speed": 100,
-                "Steer": 0
+                'Time': 10,
+                'Speed': 100,
+                'Steer': 0
             },
             {
-                "Time": 5,
-                "Speed": 100,
-                "Steer": -20
+                'Time': 10,
+                'Speed': 100,
+                'Steer': -20
             },
             {
-                "Time": 5,
-                "Speed": 100,
-                "Steer": 0
+                'Time': 10,
+                'Speed': 100,
+                'Steer': 0
             },
             {
-                "Time": 5,
-                "Speed": 100,
-                "Steer": 20
+                'Time': 10,
+                'Speed': 100,
+                'Steer': 20
             },
         ]
 
@@ -72,6 +73,7 @@ class threadLaneDetector(ThreadWithStop):
                         "Steer": 15
                     }'''
                     message = self.instructions[self.i]
+                    time.sleep(self.instructions[self.i]['Time'] / 10)
                     self.i = (self.i + 1) % len(self.instructions)
                     self.controlSender.send(message)
                 except Exception as e:
