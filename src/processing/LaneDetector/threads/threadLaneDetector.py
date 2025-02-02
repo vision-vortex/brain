@@ -34,6 +34,7 @@ class threadLaneDetector(ThreadWithStop):
                     self.mode = str(drivingModeRecv)
             except Exception as e:
                 print(e)
+            print(self.mode)
 
             if self.mode == 'auto':
                 print('Auto mode')
