@@ -76,7 +76,7 @@ queueList = {
 logging = logging.getLogger()
 
 Dashboard = True
-Camera = False # changed by Vale
+Camera = True # changed by Vale
 Semaphores = False
 TrafficCommunication = False
 SerialHandler = True # changed by Vale
