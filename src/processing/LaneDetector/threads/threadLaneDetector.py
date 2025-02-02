@@ -1,5 +1,5 @@
 from src.templates.threadwithstop import ThreadWithStop
-from src.utils.messages.allMessages import DrivingMode, SpeedMotor, SteerMotor
+from src.utils.messages.allMessages import DrivingMode, Control
 from src.utils.messages.messageHandlerSubscriber import messageHandlerSubscriber
 from src.utils.messages.messageHandlerSender import messageHandlerSender
 class threadLaneDetector(ThreadWithStop):
@@ -16,10 +16,8 @@ class threadLaneDetector(ThreadWithStop):
         self.logging = logging
         self.debugging = debugging
         self.mode = 'stop'
-        self.i = 0 # REMOVE! This is just for testing purposes
         self.subscribe()
-        self.speedMotorSender = messageHandlerSender(self.queuesList, SpeedMotor)
-        self.steerMotorSender = messageHandlerSender(self.queuesList, SteerMotor)
+        self.controlSender = messageHandlerSender(self.queuesList, Control)
 
     def subscribe(self):
         """Subscribes to the messages you are interested in"""
@@ -37,20 +35,23 @@ class threadLaneDetector(ThreadWithStop):
             except Exception as e:
                 print(e)
 
-            # Check new images from the camera
-            # TODO!
+            if self.mode == 'auto':
+                print('Auto mode')
+                # Check new images from the camera
+                # TODO!
 
-            # Send output
-            try:
-                if self.i == 0:
-                    self.speedMotorSender.send(100)
-                    self.steerMotorSender.send(15)
-                else:
-                    self.speedMotorSender.send(0)
-                    self.steerMotorSender.send(0)
-                self.i = (self.i + 1) % 2
-            except Exception as e:
-                print(e)
+                # Send output
+                try:
+                    message = {
+                        "Time": 1,
+                        "Speed": 100,
+                        "Steer": 15
+                    }
+                    self.controlSender.send(message)
+                    print('Auto action sent')
+                except Exception as e:
+                    print(e)
+
 
 
     
