@@ -19,6 +19,31 @@ class threadLaneDetector(ThreadWithStop):
         self.subscribe()
         self.controlSender = messageHandlerSender(self.queuesList, Control)
 
+        # Test code
+        self.i = 0
+        self.instructions = [
+            {
+                "Time": 5,
+                "Speed": 100,
+                "Steer": 0
+            },
+            {
+                "Time": 5,
+                "Speed": 100,
+                "Steer": -20
+            },
+            {
+                "Time": 5,
+                "Speed": 100,
+                "Steer": 0
+            },
+            {
+                "Time": 5,
+                "Speed": 100,
+                "Steer": 20
+            },
+        ]
+
     def subscribe(self):
         """Subscribes to the messages you are interested in"""
         self.drivingModeSubscriber = messageHandlerSubscriber(
@@ -34,19 +59,30 @@ class threadLaneDetector(ThreadWithStop):
                     self.mode = str(drivingModeRecv)
             except Exception as e:
                 print(e)
-            print(self.mode)
 
             if self.mode == 'auto':
-                print('Auto mode')
                 # Check new images from the camera
                 # TODO!
 
                 # Send output
                 try:
-                    message = {
-                        "Time": 1,
+                    '''message = {
+                        "Time": 10,
                         "Speed": 100,
                         "Steer": 15
+                    }'''
+                    message = self.instructions[self.i]
+                    self.i = (self.i + 1) % len(self.instructions)
+                    self.controlSender.send(message)
+                    print('Auto action sent')
+                except Exception as e:
+                    print(e)
+            elif self.mode == 'stop':
+                try:
+                    message = {
+                        "Time": 0,
+                        "Speed": 0,
+                        "Steer": 0
                     }
                     self.controlSender.send(message)
                     print('Auto action sent')
