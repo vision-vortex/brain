@@ -74,7 +74,6 @@ class threadLaneDetector(ThreadWithStop):
                     message = self.instructions[self.i]
                     self.i = (self.i + 1) % len(self.instructions)
                     self.controlSender.send(message)
-                    print('Auto action sent')
                 except Exception as e:
                     print(e)
             elif self.mode == 'stop':
@@ -85,7 +84,6 @@ class threadLaneDetector(ThreadWithStop):
                         "Steer": 0
                     }
                     self.controlSender.send(message)
-                    print('Auto action sent')
                 except Exception as e:
                     print(e)
 
