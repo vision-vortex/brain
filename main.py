@@ -60,6 +60,8 @@ from src.data.TrafficCommunication.processTrafficCommunication import processTra
 from src.utils.ipManager.IpReplacement import IPManager
 # ------ New component imports starts here ------#
 
+from src.processing.LaneDetector.processLaneDetector import processLaneDetector
+
 # ------ New component imports ends here ------#
 # ======================================== SETTING UP ====================================
 allProcesses = list()
@@ -80,6 +82,8 @@ TrafficCommunication = False
 SerialHandler = True # changed by Vale
 
 # ------ New component flags starts here ------#
+
+LaneDetector = True
  
 # ------ New component flags ends here ------#
 
@@ -121,6 +125,10 @@ if SerialHandler:
     allProcesses.append(processSerialHandler)
 
 # ------ New component runs starts here ------#
+
+if LaneDetector:
+    processLaneDetector = processLaneDetector(queueList, logging, debugging=True)
+    allProcesses.append(processLaneDetector)
  
 # ------ New component runs ends here ------#
 
